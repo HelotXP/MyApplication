@@ -1,5 +1,4 @@
 package  com.example.simone.myapplication;
-import java.lang.*;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -11,8 +10,6 @@ import android.os.Vibrator;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements SensorEventListener {
-
-
     private SensorManager sensorManager;
     private Sensor accelerometer;
 
@@ -45,19 +42,19 @@ public class MainActivity extends Activity implements SensorEventListener {
         }
 
         // accessing the vibrator service
-        if(v.hasVibrator()!=true) {
-            v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+       /* if(v.hasVibrator()) {
+            v = (Vibrator)this.getSystemService(Context.VIBRATOR_SERVICE);
         }
         else
         {
           // There is no vibrator
-        }
+        }*/
     }
 // initializing the views with id attribute in layout xml
     public void initializeViews() {
-        currentX = (TextView) findViewById(R.id.currentX);
-        currentY = (TextView) findViewById(R.id.currentY);
-        currentZ = (TextView) findViewById(R.id.currentZ);
+        currentX = (TextView)findViewById(R.id.currentX);
+        currentY = (TextView)findViewById(R.id.currentY);
+        currentZ = (TextView)findViewById(R.id.currentZ);
 
     }
 
