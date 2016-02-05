@@ -8,6 +8,11 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.widget.TextView;
+import android.widget.Button;
+import android.content.Intent;
+import android.view.View;
+import android.content.Context;
+import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity implements SensorEventListener {
     private SensorManager sensorManager;
@@ -28,6 +33,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         initializeViews();
         // access the Sensor service
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -35,7 +42,7 @@ public class MainActivity extends Activity implements SensorEventListener {
             // There is an accelerometer
 
             accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
             vibrateThreshold = accelerometer.getMaximumRange() / 2;
         } else {
             // There is no accelerometer
@@ -49,25 +56,37 @@ public class MainActivity extends Activity implements SensorEventListener {
         {
           // There is no vibrator
         }*/
+
     }
 // initializing the views with id attribute in layout xml
     public void initializeViews() {
         currentX = (TextView)findViewById(R.id.currentX);
         currentY = (TextView)findViewById(R.id.currentY);
         currentZ = (TextView)findViewById(R.id.currentZ);
-
     }
 
     //Registering the accelerometer with onsResume to listen to the events
     protected void onResume() {
         super.onResume();
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
+        Button btnBack = (Button) findViewById(R.id.buttonBack);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                intent = new Intent(getApplicationContext(), Main2Activity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     //Stopping the accelerometer from listening to events
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+
     }
 
     @Override
@@ -101,5 +120,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         currentY.setText(Float.toString(absY));
         currentZ.setText(Float.toString(absZ));
     }
-    }
+
+}
 
